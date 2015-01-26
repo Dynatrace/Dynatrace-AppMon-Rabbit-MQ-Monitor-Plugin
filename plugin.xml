@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.2"?>
+<!-- plugin.xml file written by dynaTrace Client 4.2.0 -->
+<plugin>
+  <extension point="com.dynatrace.diagnostics.pdk.pluginconfig" id="com.RabbitMQ.RabbitMQMonitor" name="RabbitMQ Monitor">
+    <information>
+      <category value="" />
+      <displayname value="RabbitMQ Monitor" />
+      <description value="This plugin wll give common metrics about RabbitMQ using the restful API." />
+      <supportlevel value="unsupported" />
+    </information>
+    <configuration>
+      <property key="Port" label="Rest Port" type="string" description="Port on the server used by the restful interface." default="15672" multiline="false" />
+      <property key="Username" label="Username" type="string" description="The username to use for authentication to the restful interface" default="" multiline="false" />
+      <property key="Password" label="Password" type="password" description="The password for the username used to authenticate to the restful interface." default="" />
+    </configuration>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitor" id="com.RabbitMQ.RabbitMQMonitor.monitor" name="RabbitMQ Monitor">
+    <plugin configid="com.RabbitMQ.RabbitMQMonitor" class="com.RabbitMQ.RabbitMQMonitor.RabbitMQMonitor" />
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.RabbitMQ.RabbitMQMonitor.monitor.Overview" name="RabbitMQ Overview">
+    <metricgroup monitorid="com.RabbitMQ.RabbitMQMonitor.monitor">
+      <metric defaultrate="purepath" name="Messages" unit="number" description="The total number of messages in the HornetQ instance." />
+      <metric defaultrate="purepath" name="Messages Ready" unit="number" description="Total number of messages in the &quot;Ready&quot; state." />
+      <metric defaultrate="purepath" name="Messages Unacknowledged" unit="number" description="Total number of messages in the &quot;Unacknowledged&quot; state." />
+      <metric defaultrate="purepath" name="Messages Rate" unit="number" description="The rate of Messages" />
+      <metric defaultrate="purepath" name="Messages Ready Rate" unit="number" description="Rate of Messages Ready" />
+      <metric defaultrate="purepath" name="Messages Unacknowledged Rate" unit="number" description="Messages Unacknowledged rate" />
+    </metricgroup>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.RabbitMQ.RabbitMQMonitor.monitor.Nodes" name="RabbitMQ Nodes">
+    <metricgroup monitorid="com.RabbitMQ.RabbitMQMonitor.monitor">
+      <metric defaultrate="purepath" name="Node Running" unit="number" description="Returns a 1 if the node is running and a 0 if the node is down.">
+        <property key="Name" value="rabbit@SHO-P-DYNTRC-01" optional="false" />
+      </metric>
+      <metric defaultrate="purepath" name="Memory Alarm" unit="number" description="Returns a 1 if the memory alarm has been tripped and a 0 if the memory alarm has not been tripped.">
+        <property key="Name" value="rabbit@SHO-P-DYNTRC-01" optional="false" />
+      </metric>
+      <metric defaultrate="purepath" name="Memory Used" unit="bytes" description="The amount of bytes used by the Node">
+        <property key="Name" value="rabbit@SHO-P-DYNTRC-01" optional="false" />
+      </metric>
+      <metric defaultrate="purepath" name="Disk Alarm" unit="number" description="Returns a 1 if the disk alarm has been tripped and a 0 if the disk alarm has not been tripped.">
+        <property key="Name" value="rabbit@SHO-P-DYNTRC-01" optional="false" />
+      </metric>
+      <metric defaultrate="purepath" name="Disk Free" unit="bytes" description="The amount of free bytes on the disk">
+        <property key="Name" value="rabbit@SHO-P-DYNTRC-01" optional="false" />
+      </metric>
+    </metricgroup>
+  </extension>
+  <extension point="com.dynatrace.diagnostics.pdk.monitormetricgroup" id="com.RabbitMQ.RabbitMQMonitor.monitor.Queue" name="RabbitMQ Queue">
+    <metricgroup monitorid="com.RabbitMQ.RabbitMQMonitor.monitor">
+      <metric defaultrate="purepath" name="Consumers" unit="number" description="The number of consumers in a queue">
+        <property key="Vhost" value="%%2f" optional="false" />
+        <property key="Queue" value="EventCorrelationEngine.MainSubscription" optional="false" />
+      </metric>
+      <!--metric defaultrate="purepath" name="Active Consumers" unit="number" description="The number of consumers in the active state for a queue">
+        <property key="Vhost" value="%%2f" optional="false" />
+        <property key="Queue" value="EventCorrelationEngine.MainSubscription" optional="false" />
+      </metric-->
+      <metric defaultrate="purepath" name="Messages" unit="number" description="The total number of messages in a queue">
+        <property key="Vhost" value="%%2f" optional="false" />
+        <property key="Queue" value="EventCorrelationEngine.MainSubscription" optional="false" />
+      </metric>
+      <metric defaultrate="purepath" name="Messages Ready" unit="number" description="The number of messages in the Ready state for the queue">
+        <property key="Vhost" value="%%2f" optional="false" />
+        <property key="Queue" value="EventCorrelationEngine.MainSubscription" optional="false" />
+      </metric>
+      <metric defaultrate="purepath" name="Messages Unacknowledged" unit="number" description="The number of messages in the Unacknowledged state in the queue">
+        <property key="Vhost" value="%%2f" optional="false" />
+        <property key="Queue" value="EventCorrelationEngine.MainSubscription" optional="false" />
+      </metric>
+    </metricgroup>
+  </extension>
+</plugin>
+
